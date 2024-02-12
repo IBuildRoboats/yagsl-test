@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ModuleConstants;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
+import swervelib.telemetry.SwerveDriveTelemetry;
+import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -34,6 +36,8 @@ public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     File swerveJsons = new File(Filesystem.getDeployDirectory(), "swerve");
+
+  SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     
     try {
       swerveDrive = new SwerveParser(swerveJsons).createSwerveDrive(ModuleConstants.maxSpeed);
@@ -58,7 +62,7 @@ public class DriveSubsystem extends SubsystemBase {
       swerveDrive.drive(new Translation2d(translationX.getAsDouble() * swerveDrive.getMaximumVelocity(),
                                           translationY.getAsDouble() * swerveDrive.getMaximumVelocity()),
                         angularRotationX.getAsDouble() * swerveDrive.getMaximumAngularVelocity(),
-                        true,
+                        false,
                         false);
     });
   }
